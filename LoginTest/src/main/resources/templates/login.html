@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spring Boot Thymeleaf Hello World Example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script type="text/javascript"
+            src="webjars/jquery/2.2.4/jquery.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <link rel="stylesheet" th:href="@{/css/main.css}"
+          href="../../css/main.css" />
+
+</head>
+<body>
+
+<div class="container" >
+
+    <div class="starter-template" id="first">
+        <h1>Login Page</h1>
+        <h2 class="error"></h2>
+        <form id="search-form">
+            <label >Username</label>
+            <input type="text" id="username" name="username"/>
+            <br>
+            <label >Password</label>
+            <input type="text" id="password" name="password"/>
+            <br>
+            <input type="submit" value="Login"/>
+        </form>
+    </div>
+
+    <div id="suc">
+        <div>
+
+            <h1 class="first-name"></h1>
+        </div>
+    </div>
+
+
+</div>
+<!-- /.container -->
+
+<script type="text/javascript"
+        src="webjars/bootstrap/3.3.7/js/b"
+        sn.js> </script>
+
+</body>
+</html>
+
+<script>
+
+    $(document).ready(function () {
+
+
+
+        $("#search-form").submit(function (event) {
+
+            console.log("Test");
+
+            //stop submit the form, we will post it manually.
+            event.preventDefault();
+
+            fire_ajax_submit();
+
+        });
+
+    });
+
+    function fire_ajax_submit() {
+
+        var search = {}
+        search["username"] = $("#username").val();
+
+
+
+        $.ajax({
+            type: "GET",
+            contentType: "application/json",
+            url: "http://localhost:9090/getUser?username="+$("#username").val() + '&password=' +$("#password").val(),
+            dataType: 'json',
+            cache: false,
+            timeout: 600000,
+            success: function (data) {
+
+                console.log("eksehey",data);
+                //first
+                //suc
+                $("div#first").hide();
+
+                $('.first-name').append("Welcome");
+                $('.first-name').append(" " + data.firstName);
+                $('.first-name').append(" " + data.lastName);
+
+
+            },
+            error: function (e) {
+                $('.error').append("Invalid Username and Password");
+               console.log("watsejy",e);
+
+            }
+        });
+
+    }
+
+
+</script>
